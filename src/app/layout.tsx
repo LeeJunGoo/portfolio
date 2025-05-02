@@ -1,22 +1,21 @@
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
-import { cookies } from 'next/headers';
+import { ThemeProvider } from '@/components/provider/ThemeProvider';
 import './globals.css';
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const cookieStore = await cookies();
-  const theme = cookieStore.get('theme')?.value; // 'light' | 'dark' | undefined
-
   return (
-    <html lang="ko" className={`scroll-smooth ${theme === 'dark' ? 'dark' : ''}`}>
+    <html lang="ko" className={`scroll-smooth`} suppressHydrationWarning>
       <body className=" bg-white dark:bg-gray-900 dark:text-white min-h-screen text-black transition-colors duration-300">
-        <Header theme={theme} />
-        {children}
-        <Footer />
+        <ThemeProvider attribute="class">
+          <Header />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -5,3 +5,5 @@ export const navList = [
   { href: '#projects', label: '프로젝트' },
   { href: '#contact', label: '연락처' },
 ];
+
+export const contactEmail = 'leejungoo1396@gmail.com';

@@ -1,35 +1,37 @@
 'use client';
 
-import { useToggleOpen } from '@/store/side-toggle-store';
 import { ThemeButtonProps } from '@/types';
+import { useTheme } from 'next-themes';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const ThemeButton = ({ iconImage, className, id, ariaLabel }: ThemeButtonProps) => {
-  const theme = useRef<'light' | 'dark'>('light');
-  const [icon, setIcon] = useState<string>(iconImage);
-  const isOpen = useToggleOpen();
+const ThemeButton = ({ className, id, ariaLabel }: ThemeButtonProps) => {
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const [icon, setIcon] = useState<string>('');
 
   useEffect(() => {
-    if (!isOpen) return;
+    setMounted(true);
+  }, []);
 
-    const isDark = document.documentElement.classList.contains('dark');
-    theme.current = isDark ? 'dark' : 'light';
-    setIcon(isDark ? '/moon.svg' : '/sun.svg');
-    console.log('너 실행', isOpen);
-  }, [isOpen]);
+  useEffect(() => {
+    if (!resolvedTheme) return;
 
-  const setThemeValue = (nextTheme: 'light' | 'dark') => {
-    document.documentElement.classList.toggle('dark', nextTheme === 'dark');
-    document.cookie = `theme=${nextTheme}; path=/; max-age=31536000`;
-    theme.current = nextTheme;
-    setIcon(nextTheme === 'dark' ? '/moon.svg' : '/sun.svg');
-  };
+    setIcon(resolvedTheme === 'dark' ? '/moon.svg' : '/sun.svg');
+  }, [resolvedTheme]);
 
   const toggleTheme = () => {
-    const nextTheme = theme.current === 'dark' ? 'light' : 'dark';
-    setThemeValue(nextTheme);
+    const nextTheme = resolvedTheme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
   };
+
+  if (!mounted) {
+    return (
+      <div className={className}>
+        <div className="w-[20] h-[20]" />
+      </div>
+    );
+  }
 
   return (
     <button className={className} onClick={toggleTheme} id={id} aria-label={ariaLabel}>

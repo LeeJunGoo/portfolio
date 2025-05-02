@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import ThemeButton from '../common/ThemeButton';
 
-const SideBar = ({ iconImage }: { iconImage: string }) => {
+const SideBar = () => {
   const isOpen = useToggleOpen();
   const { setOpen } = useToggleActions();
 
@@ -50,7 +50,6 @@ const SideBar = ({ iconImage }: { iconImage: string }) => {
         </nav>
         <div className="px-3 mt-6">
           <ThemeButton
-            iconImage={iconImage}
             className="w-full flex justify-center p-2 rounded-full bg-yellow-200 dark:bg-gray-600"
             id="darkModeMobileToggle"
             ariaLabel="모바일 전용 다크모드 버튼입니다."

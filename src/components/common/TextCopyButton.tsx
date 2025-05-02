@@ -2,14 +2,14 @@
 
 import { HiOutlineMail } from 'react-icons/hi';
 import { useState } from 'react';
+import { contactEmail } from '@/util/constants';
 
 const TextCopyButton = () => {
   const [copied, setCopied] = useState(false);
-  const email = 'leejungoo1396@gmail.com';
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(email);
+      await navigator.clipboard.writeText(contactEmail);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch (err) {
@@ -24,7 +24,7 @@ const TextCopyButton = () => {
       title="이메일 복사"
     >
       <HiOutlineMail className="text-2xl" />
-      <span className="font-semibold">{copied ? '이메일이 복사되었습니다!' : email}</span>
+      <span className="font-semibold">{copied ? '이메일이 복사되었습니다!' : contactEmail}</span>
     </button>
   );
 };

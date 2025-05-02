@@ -1,12 +1,9 @@
 'use client';
 
-import React, { TextareaHTMLAttributes, useEffect, useRef, useState } from 'react';
+import { TextAreaProps } from '@/types';
+import React, { useEffect, useRef, useState } from 'react';
 
-type Props = TextareaHTMLAttributes<HTMLTextAreaElement> & {
-  maxRows: number;
-};
-
-const TextArea = ({ maxRows, ...props }: Props) => {
+const TextArea = ({ maxRows, ...props }: TextAreaProps) => {
   const [value, setValue] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
