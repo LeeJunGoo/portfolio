@@ -1,1 +1,15 @@
 @import 'tailwindcss';
+
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}
+
+input,
+textarea,
+select {
+  @apply focus:outline-none;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
